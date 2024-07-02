@@ -1,0 +1,114 @@
+1: GET ALL USERS
+query getAllUsers{
+  users{
+    id
+    name
+    email
+  }
+}
+------------------------------
+2: GET ALL QUOTES
+query getAllQuotes{
+  allQuotes{
+    writtenBy
+    qoute
+  
+  }
+}
+------------------------------
+3: Get all users and their all quotes
+query getAllUsersAndQueries {
+  myUsers {
+    id
+    name
+    email
+    individualQuotes {
+      writtenBy
+      quote
+    }
+  }
+}
+------------------------------
+4: Get single user and his all quotes
+query getUserById{
+singleUser(id:"1"){
+   name
+  email
+  id
+  individualQuotes{
+    writtenBy
+  }
+}
+}
+
+------------------------------
+5:Get a quote of specific user. Previous query and this one are almost same
+{
+  singleUserQuote(writtenBy:"1"){
+   writtenBy
+     quote
+  }
+}
+
+------------------------------
+6: Getting a specific user through query Variables. it does not receive hardcoded values
+
+query getUserById($userId:ID!){
+
+  singleUser(id:$userId){
+    id
+    name
+    email
+  }
+}
+------------------------------
+7: Getting a specific quote through query Variables. it does not receive hardcoded values
+query getSpecificQuote($quoteId:ID!){
+  
+  singleUserQuote(writtenBy:$quoteId){
+writtenBy
+    quote
+   
+  }
+}
+
+---------------------------------
+8-a Creating new User through query Variables . We are also returning the new user
+
+mutation createUser($newUser:USERINPUT!){
+createUser(userInput:$newUser){
+  id
+    name
+    email
+  }
+}
+----------------------------------
+8-b Creating new User through query Variables . We are also returning the new user
+we are using 'alias' newMember. So instead of showing createUser, It will show: newMember:{userInput Data} 
+
+mutation createUser($newUser:USERINPUT!){
+newMember:createUser(userInput:$newUser){
+  id
+    name
+    email
+  }
+}
+----------------------------------
+9-SignUp
+mutation signup($userDetails:USERINPUT!){
+  createUser(userInput:$userDetails){
+    _id
+    name
+    email
+    password
+  }
+}
+----------------------------------
+10-Login
+mutation login($loginDetails:LOGINDETAILS!){
+  login(loginDetails:$loginDetails){
+    token
+    
+  }
+}
+
